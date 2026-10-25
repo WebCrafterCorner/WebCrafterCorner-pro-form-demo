@@ -1,0 +1,249 @@
+/*
+Theme Name: PRO-FORM Custom Theme
+Author: PRO-FORM
+Version: 1.0
+Description: Premium Fitness & Nutrition E-Commerce Theme for PRO-FORM
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #00D2C8; /* Pro-Form Teal */
+    --primary-dark: #00A39B;
+    --dark-bg: #111827;      /* Dark Charcoal/Black */
+    --accent-yellow: #FFB800;
+    --light-bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-dark: #0F172A;
+    --text-muted: #64748B;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Announcement Bar */
+.top-announcement {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 8px 15px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.top-announcement span {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Header */
+.main-header {
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-dark);
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: var(--primary-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-dark);
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.header-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.cart-btn {
+    background: var(--primary-color);
+    color: #fff !important;
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* Hero Section */
+.hero-banner {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color: #fff;
+    padding: 80px 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-banner h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.hero-banner h1 span {
+    color: var(--primary-color);
+}
+
+.hero-banner p {
+    font-size: 18px;
+    color: #94A3B8;
+    margin-bottom: 30px;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+/* Section Title */
+.section-title {
+    text-align: center;
+    margin: 50px 0 30px;
+}
+
+.section-title h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-dark);
+}
+
+/* Categories Grid */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 0 5%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.category-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border: 1px solid #E2E8F0;
+    transition: transform 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+/* Featured Products */
+.products-container {
+    padding: 0 5%;
+    max-width: 1300px;
+    margin: 0 auto 60px;
+}
+
+/* Footer Styling */
+.main-footer {
+    background: var(--accent-yellow);
+    color: #1E293B;
+    padding: 60px 5% 30px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.footer-col h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-top: 40px;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+}
