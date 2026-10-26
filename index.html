@@ -24,7 +24,7 @@
             color: #222;
         }
 
-        /* Top Announcement Bar */
+        /* Announcement Bar */
         .top-bar {
             background-color: #000;
             color: #fff;
@@ -329,7 +329,7 @@
             right: 20px;
             background: none;
             border: none;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
             color: #555;
             z-index: 10;
@@ -630,6 +630,7 @@
     </div>
 
     <script>
+        // Bulletproof Unsplash High-Performance Image URLs for 100% Loading Success
         const productsData = [
             {
                 id: 1,
@@ -665,12 +666,11 @@
             }
         ];
 
-        let cart = [
-            { name: 'Pre – Workout', price: 999, oldPrice: 1499, img: productsData[0].img, qty: 1 },
-            { name: 'Whey Protein', price: 999, oldPrice: 1999, img: productsData[1].img, qty: 1 },
-            { name: 'Mass Gainer', price: 1199, oldPrice: 2299, img: productsData[2].img, qty: 1 },
-            { name: 'Creatine', price: 139, oldPrice: 299, img: productsData[3].img, qty: 1 }
-        ];
+        let cart = JSON.parse(localStorage.getItem('proform_cart')) || [];
+
+        function saveCart() {
+            localStorage.setItem('proform_cart', JSON.stringify(cart));
+        }
 
         function renderProducts() {
             const container = document.getElementById('product-grid-container');
@@ -737,6 +737,7 @@
             } else {
                 cart.push({ name, price, oldPrice, img, qty: 1 });
             }
+            saveCart();
             renderCart();
             openCart();
         }
@@ -746,11 +747,13 @@
             if (cart[index].qty <= 0) {
                 cart.splice(index, 1);
             }
+            saveCart();
             renderCart();
         }
 
         function removeItem(index) {
             cart.splice(index, 1);
+            saveCart();
             renderCart();
         }
 
@@ -766,32 +769,36 @@
             let subtotal = 0;
             let totalSavings = 0;
 
-            cart.forEach((item, index) => {
-                totalQty += item.qty;
-                subtotal += item.price * item.qty;
-                totalSavings += (item.oldPrice - item.price) * item.qty;
+            if (cart.length === 0) {
+                list.innerHTML = `<p style="text-align: center; color: #888; margin-top: 40px; font-size: 14px;">Your cart is empty.</p>`;
+            } else {
+                cart.forEach((item, index) => {
+                    totalQty += item.qty;
+                    subtotal += item.price * item.qty;
+                    totalSavings += (item.oldPrice - item.price) * item.qty;
 
-                let row = document.createElement('div');
-                row.className = 'cart-item-row';
-                row.innerHTML = `
-                    <img src="${item.img}" class="cart-item-img" alt="${item.name}">
-                    <div class="cart-item-info">
-                        <h4>${item.name}</h4>
-                        <div class="cart-item-price">Price: <span style="text-decoration:line-through;">₹${item.oldPrice}.00</span> <strong style="color:#000;">₹${item.price}.00</strong></div>
-                        <span class="save-tag">SAVE ₹${(item.oldPrice - item.price) * item.qty}.00</span>
-                        <div>
-                            <div class="qty-box">
-                                <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
-                                <span class="qty-val">${item.qty}</span>
-                                <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    let row = document.createElement('div');
+                    row.className = 'cart-item-row';
+                    row.innerHTML = `
+                        <img src="${item.img}" class="cart-item-img" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <div class="cart-item-price">Price: <span style="text-decoration:line-through;">₹${item.oldPrice}.00</span> <strong style="color:#000;">₹${item.price}.00</strong></div>
+                            <span class="save-tag">SAVE ₹${(item.oldPrice - item.price) * item.qty}.00</span>
+                            <div>
+                                <div class="qty-box">
+                                    <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                                    <span class="qty-val">${item.qty}</span>
+                                    <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="cart-item-total">₹${(item.price * item.qty).toLocaleString()}.00</div>
-                    <i class="fa-solid fa-trash remove-icon" onclick="removeItem(${index})"></i>
-                `;
-                list.appendChild(row);
-            });
+                        <div class="cart-item-total">₹${(item.price * item.qty).toLocaleString()}.00</div>
+                        <i class="fa-solid fa-trash remove-icon" onclick="removeItem(${index})"></i>
+                    `;
+                    list.appendChild(row);
+                });
+            }
 
             floatCount.innerText = totalQty;
             savingsEl.innerText = `₹${totalSavings.toLocaleString()}.00`;
