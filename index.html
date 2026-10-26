@@ -216,21 +216,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 220px;
+            height: 200px;
+            cursor: pointer;
         }
 
         .product-img-box img {
             max-height: 100%;
             max-width: 100%;
             object-fit: contain;
+            transition: transform 0.2s;
         }
+        .product-img-box:hover img { transform: scale(1.05); }
 
         .product-name {
             font-size: 16px;
             font-weight: 700;
             color: #111;
             margin-bottom: 8px;
+            cursor: pointer;
         }
+        .product-name:hover { color: #58259c; }
 
         .price-line {
             margin-bottom: 12px;
@@ -290,6 +295,70 @@
             font-size: 12px;
             font-weight: 700;
         }
+
+        /* Product Details Modal (Popup) */
+        .product-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .product-modal-overlay.active { display: flex; }
+
+        .product-modal {
+            background: #fff;
+            border-radius: 12px;
+            max-width: 750px;
+            width: 100%;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #555;
+            z-index: 10;
+        }
+
+        .modal-img-col {
+            width: 45%;
+            background: #f9f9fc;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-img-col img {
+            max-width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+        }
+
+        .modal-info-col {
+            width: 55%;
+            padding: 35px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .modal-title { font-size: 22px; font-weight: 800; color: #111; margin-bottom: 10px; }
+        .modal-prices { margin-bottom: 15px; font-size: 18px; }
+        .modal-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 20px; }
 
         /* Cart Drawer */
         .cart-overlay {
@@ -454,9 +523,7 @@
             gap: 8px;
         }
 
-        .btn-flex-group button {
-            flex: 1;
-        }
+        .btn-flex-group button { flex: 1; }
     </style>
 </head>
 <body>
@@ -499,67 +566,9 @@
             <a href="#featured" class="category-box">Pre-Workout</a>
         </div>
 
-        <!-- Featured Products -->
+        <!-- Featured Products Grid -->
         <h2 class="section-title" id="featured">Featured Products</h2>
-        <div class="product-grid">
-
-            <!-- Pre-Workout -->
-            <div class="product-card">
-                <span class="sale-badge">Sale!</span>
-                <div class="product-img-box">
-                    <img src="https://images.unsplash.com/photo-1546483875-ad9014c88eba?w=400&q=80" alt="Pre-Workout">
-                </div>
-                <div class="product-name">Pre – Workout</div>
-                <div class="price-line">
-                    <span class="old-price">₹1,499.00</span>
-                    <span class="new-price">₹999.00</span>
-                </div>
-                <button class="add-cart-btn" onclick="addToCart('Pre – Workout', 999, 1499, 'https://images.unsplash.com/photo-1546483875-ad9014c88eba?w=400&q=80')">Add to cart</button>
-            </div>
-
-            <!-- Whey Protein -->
-            <div class="product-card">
-                <span class="sale-badge">Sale!</span>
-                <div class="product-img-box">
-                    <img src="https://images.unsplash.com/photo-1579722820308-d74e57170ca0?w=400&q=80" alt="Whey Protein">
-                </div>
-                <div class="product-name">Whey Protein</div>
-                <div class="price-line">
-                    <span class="old-price">₹1,999.00</span>
-                    <span class="new-price">₹999.00</span>
-                </div>
-                <button class="add-cart-btn" onclick="addToCart('Whey Protein', 999, 1999, 'https://images.unsplash.com/photo-1579722820308-d74e57170ca0?w=400&q=80')">Add to cart</button>
-            </div>
-
-            <!-- Mass Gainer -->
-            <div class="product-card">
-                <span class="sale-badge">Sale!</span>
-                <div class="product-img-box">
-                    <img src="https://images.unsplash.com/photo-1550572017-edd951b55104?w=400&q=80" alt="Mass Gainer">
-                </div>
-                <div class="product-name">Mass Gainer</div>
-                <div class="price-line">
-                    <span class="old-price">₹2,299.00</span>
-                    <span class="new-price">₹1,199.00</span>
-                </div>
-                <button class="add-cart-btn" onclick="addToCart('Mass Gainer', 1199, 2299, 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=400&q=80')">Add to cart</button>
-            </div>
-
-            <!-- Creatine -->
-            <div class="product-card">
-                <span class="sale-badge">Sale!</span>
-                <div class="product-img-box">
-                    <img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&q=80" alt="Creatine">
-                </div>
-                <div class="product-name">Creatine</div>
-                <div class="price-line">
-                    <span class="old-price">₹299.00</span>
-                    <span class="new-price">₹139.00</span>
-                </div>
-                <button class="add-cart-btn" onclick="addToCart('Creatine', 139, 299, 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&q=80')">Add to cart</button>
-            </div>
-
-        </div>
+        <div class="product-grid" id="product-grid-container"></div>
     </div>
 
     <!-- Floating Cart Button -->
@@ -568,35 +577,46 @@
         <i class="fa-solid fa-bag-shopping" style="font-size: 18px;"></i>
     </div>
 
+    <!-- Product Details Modal (Popup) -->
+    <div class="product-modal-overlay" id="product-modal-overlay" onclick="closeProductModal(event)">
+        <div class="product-modal" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="closeProductModal()">&times;</button>
+            <div class="modal-img-col">
+                <img id="modal-product-img" src="" alt="Product">
+            </div>
+            <div class="modal-info-col">
+                <h2 class="modal-title" id="modal-product-title"></h2>
+                <div class="modal-prices">
+                    <span class="old-price" id="modal-old-price"></span>
+                    <span class="new-price" id="modal-new-price"></span>
+                </div>
+                <p class="modal-desc" id="modal-product-desc"></p>
+                <button class="add-cart-btn" style="background-color:#58259c; color:#fff; padding:12px; font-size:14px;" id="modal-add-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Cart Overlay & Drawer -->
     <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
     <div class="cart-drawer" id="cart-drawer">
-        
         <div class="cart-alert">
             <i class="fa-solid fa-circle-check"></i> Item added to cart
         </div>
-
-        <div class="cart-items-list" id="cart-list">
-            <!-- Items added dynamically -->
-        </div>
-
+        <div class="cart-items-list" id="cart-list"></div>
         <div class="cart-footer-box">
             <div class="trust-badges">
                 <div class="badge-item"><i class="fa-solid fa-shield-halved"></i> Secure Checkout</div>
                 <div class="badge-item"><i class="fa-solid fa-truck-fast"></i> Fast Shipping</div>
                 <div class="badge-item"><i class="fa-solid fa-rotate-left"></i> Easy Returns</div>
             </div>
-
             <div class="savings-line">
                 <span>Your savings on this order:</span>
                 <span id="savings-amount">₹0.00</span>
             </div>
-
             <div class="subtotal-line">
                 <span>Subtotal:</span>
                 <span id="subtotal-amount">₹0.00</span>
             </div>
-
             <div class="cart-actions">
                 <div class="btn-flex-group">
                     <button class="btn-dark" onclick="closeCart()">View Cart</button>
@@ -610,12 +630,95 @@
     </div>
 
     <script>
-        let cart = [
-            { name: 'Pre – Workout', price: 999, oldPrice: 1499, img: 'https://images.unsplash.com/photo-1546483875-ad9014c88eba?w=400&q=80', qty: 1 },
-            { name: 'Whey Protein', price: 999, oldPrice: 1999, img: 'https://images.unsplash.com/photo-1579722820308-d74e57170ca0?w=400&q=80', qty: 1 },
-            { name: 'Mass Gainer', price: 1199, oldPrice: 2299, img: 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=400&q=80', qty: 1 },
-            { name: 'Creatine', price: 139, oldPrice: 299, img: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&q=80', qty: 1 }
+        const productsData = [
+            {
+                id: 1,
+                name: "Pre – Workout",
+                price: 999,
+                oldPrice: 1499,
+                img: "https://images.unsplash.com/photo-1546483875-ad9014c88eba?w=400&q=80",
+                desc: "Explosive Energy & Endurance formula designed for intense workout sessions. Packed with Citrulline, Beta-Alanine, and Caffeine for maximum pumps."
+            },
+            {
+                id: 2,
+                name: "Whey Protein",
+                price: 999,
+                oldPrice: 1999,
+                img: "https://images.unsplash.com/photo-1579722820308-d74e57170ca0?w=400&q=80",
+                desc: "100% Pure Whey Protein Isolate providing 25g of protein per serving. Ultra-fast absorption for quick muscle recovery after heavy training."
+            },
+            {
+                id: 3,
+                name: "Mass Gainer",
+                price: 1199,
+                oldPrice: 2299,
+                img: "https://images.unsplash.com/photo-1550572017-edd951b55104?w=400&q=80",
+                desc: "High-calorie formula with complex carbs and premium protein blend for fast mass building and clean weight gain."
+            },
+            {
+                id: 4,
+                name: "Creatine",
+                price: 139,
+                oldPrice: 299,
+                img: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&q=80",
+                desc: "100% Micronized Creatine Monohydrate for boosted strength, explosive power, and muscle volume during workouts."
+            }
         ];
+
+        let cart = [
+            { name: 'Pre – Workout', price: 999, oldPrice: 1499, img: productsData[0].img, qty: 1 },
+            { name: 'Whey Protein', price: 999, oldPrice: 1999, img: productsData[1].img, qty: 1 },
+            { name: 'Mass Gainer', price: 1199, oldPrice: 2299, img: productsData[2].img, qty: 1 },
+            { name: 'Creatine', price: 139, oldPrice: 299, img: productsData[3].img, qty: 1 }
+        ];
+
+        function renderProducts() {
+            const container = document.getElementById('product-grid-container');
+            container.innerHTML = '';
+
+            productsData.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <span class="sale-badge">Sale!</span>
+                    <div class="product-img-box" onclick="openProductModal(${p.id})">
+                        <img src="${p.img}" alt="${p.name}">
+                    </div>
+                    <div class="product-name" onclick="openProductModal(${p.id})">${p.name}</div>
+                    <div class="price-line">
+                        <span class="old-price">₹${p.oldPrice}.00</span>
+                        <span class="new-price">₹${p.price}.00</span>
+                    </div>
+                    <button class="add-cart-btn" onclick="addToCart('${p.name}', ${p.price}, ${p.oldPrice}, '${p.img}')">Add to cart</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openProductModal(productId) {
+            const p = productsData.find(item => item.id === productId);
+            if (!p) return;
+
+            document.getElementById('modal-product-img').src = p.img;
+            document.getElementById('modal-product-title').innerText = p.name;
+            document.getElementById('modal-old-price').innerText = `₹${p.oldPrice}.00`;
+            document.getElementById('modal-new-price').innerText = `₹${p.price}.00`;
+            document.getElementById('modal-product-desc').innerText = p.desc;
+            
+            const addBtn = document.getElementById('modal-add-btn');
+            addBtn.onclick = function() {
+                addToCart(p.name, p.price, p.oldPrice, p.img);
+                closeProductModal();
+            };
+
+            document.getElementById('product-modal-overlay').classList.add('active');
+        }
+
+        function closeProductModal(e) {
+            if (!e || e.target.id === 'product-modal-overlay' || e.target.className === 'modal-close-btn') {
+                document.getElementById('product-modal-overlay').classList.remove('active');
+            }
+        }
 
         function openCart() {
             document.getElementById('cart-drawer').classList.add('open');
@@ -696,7 +799,7 @@
             checkoutEl.innerText = `₹${subtotal.toLocaleString()}.00`;
         }
 
-        // Initial Render
+        renderProducts();
         renderCart();
     </script>
 </body>
