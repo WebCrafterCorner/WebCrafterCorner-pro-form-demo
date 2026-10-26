@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro-Form Store - Live Demo</title>
-    <!-- Google Fonts & Font Awesome for Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Pro-Form Fitness - Store Demo</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -17,71 +17,97 @@
         }
 
         body {
-            background-color: #f4f7f6;
+            background-color: #f8f9fa;
             color: #333;
         }
 
-        /* Navbar */
-        header {
+        /* Top Announcement Bar */
+        .top-bar {
             background-color: #111;
-            color: #fff;
+            color: #ffc107;
+            text-align: center;
+            padding: 8px 10px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: #fff;
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
             font-size: 24px;
             font-weight: 700;
             letter-spacing: 1px;
-            color: #ff3e3e;
+            color: #111;
         }
 
-        .logo span { color: #fff; }
+        .logo span { color: #00bcd4; }
 
-        .cart-icon-btn {
-            position: relative;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -10px;
-            background-color: #ff3e3e;
-            color: white;
-            font-size: 12px;
-            padding: 2px 6px;
-            border-radius: 50%;
-            font-weight: bold;
-        }
-
-        /* Hero Banner */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200') center/cover;
-            height: 300px;
+        .nav-links {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            text-align: center;
-            padding: 0 20px;
+            gap: 25px;
+            list-style: none;
         }
 
-        .hero h1 { font-size: 38px; margin-bottom: 10px; text-transform: uppercase; }
-        .hero p { font-size: 16px; color: #ddd; }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
 
-        /* Products Grid */
+        .nav-links a:hover { color: #5c218f; }
+
+        .cart-btn {
+            background-color: #00bcd4;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(75, 0, 130, 0.85), rgba(75, 0, 130, 0.85)), url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200') center/cover;
+            padding: 70px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero h1 { font-size: 38px; margin-bottom: 10px; font-weight: 700; }
+        .hero p { font-size: 15px; margin-bottom: 20px; color: #e0e0e0; }
+
+        .shop-now-btn {
+            background-color: #fff;
+            color: #4b0082;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .shop-now-btn:hover { background-color: #f1f1f1; }
+
+        /* Container & Products Grid */
         .container {
             max-width: 1200px;
             margin: 40px auto;
@@ -89,118 +115,137 @@
         }
 
         .section-title {
-            font-size: 26px;
-            margin-bottom: 25px;
             text-align: center;
-            position: relative;
+            font-size: 26px;
+            color: #4b0082;
+            margin-bottom: 30px;
+            font-weight: 700;
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
         }
 
+        /* Product Box / Card */
         .product-card {
             background: #fff;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
+        .product-card:hover { transform: translateY(-5px); }
+
+        .sale-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: #d4af37;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
         }
 
         .product-img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
+            background-color: #fff;
         }
 
         .product-info {
-            padding: 15px;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .product-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             margin-bottom: 8px;
+            color: #222;
         }
 
-        .product-price {
-            font-size: 16px;
-            color: #ff3e3e;
+        .price-box {
+            margin-bottom: 15px;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 13px;
+            margin-right: 8px;
+        }
+
+        .current-price {
+            color: #4b0082;
+            font-size: 17px;
             font-weight: 700;
-            margin-bottom: 12px;
         }
 
         .add-to-cart-btn {
             width: 100%;
-            background-color: #111;
+            background-color: #222;
             color: #fff;
             border: none;
             padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 6px;
             font-weight: 600;
+            cursor: pointer;
             transition: background 0.3s;
         }
 
-        .add-to-cart-btn:hover {
-            background-color: #ff3e3e;
-        }
+        .add-to-cart-btn:hover { background-color: #4b0082; }
 
-        /* Slide-Out Cart Drawer Overlay */
+        /* Slide-Out Cart Drawer */
         .cart-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             display: none;
             z-index: 998;
         }
-
         .cart-overlay.active { display: block; }
 
-        /* Slide-out Cart Drawer */
         .cart-drawer {
             position: fixed;
             top: 0;
-            right: -400px;
-            width: 350px;
+            right: -420px;
+            width: 400px;
             height: 100%;
-            background-color: #fff;
+            background: #fff;
             z-index: 999;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            box-shadow: -5px 0 20px rgba(0,0,0,0.15);
             transition: right 0.3s ease-in-out;
             display: flex;
             flex-direction: column;
         }
-
-        .cart-drawer.open {
-            right: 0;
-        }
+        .cart-drawer.open { right: 0; }
 
         .cart-header {
-            padding: 20px;
-            background: #111;
+            background: #4b0082;
             color: #fff;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .close-cart-btn {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-        }
+        .close-cart { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; }
 
         .cart-items {
             flex: 1;
@@ -210,181 +255,259 @@
 
         .cart-item {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             margin-bottom: 15px;
             border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
 
-        .cart-item-title { font-size: 14px; font-weight: 600; }
-        .cart-item-price { font-size: 13px; color: #666; }
+        .cart-item-details h4 { font-size: 14px; margin-bottom: 4px; }
+        .cart-item-details p { font-size: 13px; color: #4b0082; font-weight: 600; }
 
-        .remove-btn {
-            color: #ff3e3e;
-            cursor: pointer;
-            background: none;
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .qty-btn {
+            background: #ddd;
             border: none;
-            font-size: 14px;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
         }
+
+        .remove-item { color: #ff4d4d; background: none; border: none; cursor: pointer; font-size: 16px; }
 
         .cart-footer {
             padding: 20px;
-            border-top: 1px solid #eee;
             background: #f9f9f9;
+            border-top: 1px solid #eee;
         }
 
         .cart-total {
             display: flex;
             justify-content: space-between;
-            font-weight: bold;
             font-size: 18px;
+            font-weight: 700;
             margin-bottom: 15px;
+            color: #222;
         }
 
         .checkout-btn {
             width: 100%;
-            background-color: #ff3e3e;
+            background-color: #4b0082;
             color: #fff;
             border: none;
             padding: 12px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 6px;
+            font-size: 15px;
             font-weight: 600;
+            cursor: pointer;
         }
-
-        .checkout-btn:hover { background-color: #e03232; }
+        .checkout-btn:hover { background-color: #38006b; }
     </style>
 </head>
 <body>
 
+    <!-- Top Coupon Bar -->
+    <div class="top-bar">
+        ⚡ Use Coupon Code <strong>PROFORM10</strong> to get 10% OFF on all orders!
+    </div>
+
     <!-- Header -->
     <header>
         <div class="logo">PRO-FORM <span>FITNESS</span></div>
-        <button class="cart-icon-btn" id="open-cart">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span class="cart-badge" id="cart-count">0</span>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+        <button class="cart-btn" onclick="openCart()">
+            <i class="fa-solid fa-cart-shopping"></i> Cart (<span id="cart-count">0</span>)
         </button>
     </header>
 
     <!-- Hero Section -->
     <div class="hero">
-        <h1>Pro-Form Equipment</h1>
-        <p>Premium Fitness & Workout Gear Interactive Demo</p>
+        <h1>Welcome to PRO-FORM FITNESS</h1>
+        <p>Fuel your passion with high-performance fitness supplements and gear.</p>
+        <a href="#" class="shop-now-btn">Shop Now</a>
     </div>
 
-    <!-- Product Grid -->
+    <!-- Products Section -->
     <div class="container">
-        <h2 class="section-title">Featured Gear</h2>
+        <h2 class="section-title">Featured Products</h2>
         <div class="product-grid">
 
+            <!-- Product 1 -->
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=400" class="product-img" alt="Dumbbell Set">
+                <span class="sale-badge">Sale!</span>
+                <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=400" class="product-img" alt="Pre-Workout">
                 <div class="product-info">
-                    <div class="product-title">Adjustable Dumbbells</div>
-                    <div class="product-price">₹4,999</div>
-                    <button class="add-to-cart-btn" onclick="addToCart('Adjustable Dumbbells', 4999)">Add To Cart</button>
+                    <div>
+                        <div class="product-title">Pre – Workout</div>
+                        <div class="price-box">
+                            <span class="old-price">₹1,499.00</span>
+                            <span class="current-price">₹999.00</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('Pre – Workout', 999, 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=400')">Add to cart</button>
                 </div>
             </div>
 
+            <!-- Product 2 -->
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=400" class="product-img" alt="Resistance Bands">
-                <div class="product-info">
-                    <div class="product-title">Pro Resistance Bands Set</div>
-                    <div class="product-price">₹1,299</div>
-                    <button class="add-to-cart-btn" onclick="addToCart('Pro Resistance Bands Set', 1299)">Add To Cart</button>
-                </div>
-            </div>
-
-            <div class="product-card">
+                <span class="sale-badge">Sale!</span>
                 <img src="https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400" class="product-img" alt="Whey Protein">
                 <div class="product-info">
-                    <div class="product-title">Pro Nutrition Whey 2kg</div>
-                    <div class="product-price">₹3,499</div>
-                    <button class="add-to-cart-btn" onclick="addToCart('Pro Nutrition Whey 2kg', 3499)">Add To Cart</button>
+                    <div>
+                        <div class="product-title">Whey Protein</div>
+                        <div class="price-box">
+                            <span class="old-price">₹1,999.00</span>
+                            <span class="current-price">₹999.00</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('Whey Protein', 999, 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400')">Add to cart</button>
                 </div>
             </div>
 
+            <!-- Product 3 -->
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=400" class="product-img" alt="Yoga Mat">
+                <span class="sale-badge">Sale!</span>
+                <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=400" class="product-img" alt="Mass Gainer">
                 <div class="product-info">
-                    <div class="product-title">Non-Slip Fitness Mat</div>
-                    <div class="product-price">₹899</div>
-                    <button class="add-to-cart-btn" onclick="addToCart('Non-Slip Fitness Mat', 899)">Add To Cart</button>
+                    <div>
+                        <div class="product-title">Mass Gainer</div>
+                        <div class="price-box">
+                            <span class="old-price">₹2,299.00</span>
+                            <span class="current-price">₹1,199.00</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('Mass Gainer', 1199, 'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=400')">Add to cart</button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <span class="sale-badge">Sale!</span>
+                <img src="https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=400" class="product-img" alt="Creatine">
+                <div class="product-info">
+                    <div>
+                        <div class="product-title">Pure Creatine</div>
+                        <div class="price-box">
+                            <span class="old-price">₹299.00</span>
+                            <span class="current-price">₹139.00</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('Pure Creatine', 139, 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=400')">Add to cart</button>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- Overlay & Slide-Out Cart Drawer -->
+    <!-- Slide-Out Cart Drawer -->
     <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
-    
     <div class="cart-drawer" id="cart-drawer">
         <div class="cart-header">
             <h3>Your Cart</h3>
-            <button class="close-cart-btn" onclick="closeCart()"><i class="fa-solid fa-xmark"></i></button>
+            <button class="close-cart" onclick="closeCart()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="cart-items" id="cart-items">
-            <p style="text-align: center; color: #888; margin-top: 20px;">Your cart is empty.</p>
+            <p style="text-align: center; color: #888; margin-top: 30px;">Your cart is empty.</p>
         </div>
         <div class="cart-footer">
             <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total-price">₹0</span>
+                <span>Subtotal:</span>
+                <span id="cart-total">₹0</span>
             </div>
-            <button class="checkout-btn" onclick="alert('This is a visual demo! Checkout is active in production.')">Proceed to Demo Checkout</button>
+            <button class="checkout-btn" onclick="alert('Demo Checkout Successful!')">Proceed to Checkout</button>
         </div>
     </div>
 
-    <!-- Cart JavaScript Logic -->
+    <!-- JavaScript Logic -->
     <script>
         let cart = [];
 
-        const cartDrawer = document.getElementById('cart-drawer');
-        const cartOverlay = document.getElementById('cart-overlay');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartCount = document.getElementById('cart-count');
-        const cartTotalPrice = document.getElementById('cart-total-price');
-
-        document.getElementById('open-cart').addEventListener('click', openCart);
-
         function openCart() {
-            cartDrawer.classList.add('open');
-            cartOverlay.classList.add('active');
+            document.getElementById('cart-drawer').classList.add('open');
+            document.getElementById('cart-overlay').classList.add('active');
         }
 
         function closeCart() {
-            cartDrawer.classList.remove('open');
-            cartOverlay.classList.remove('active');
+            document.getElementById('cart-drawer').classList.remove('open');
+            document.getElementById('cart-overlay').classList.remove('active');
         }
 
-        function addToCart(title, price) {
-            cart.push({ title, price });
-            updateCart();
+        function addToCart(name, price, img) {
+            let existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ name, price, img, qty: 1 });
+            }
+            updateCartUI();
             openCart();
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
+        function changeQty(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
         }
 
-        function updateCart() {
-            cartCount.innerText = cart.length;
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            let countSpan = document.getElementById('cart-count');
+            let itemsContainer = document.getElementById('cart-items');
+            let totalSpan = document.getElementById('cart-total');
+
+            let totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            countSpan.innerText = totalCount;
 
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `<p style="text-align: center; color: #888; margin-top: 20px;">Your cart is empty.</p>`;
-                cartTotalPrice.innerText = `₹0`;
+                itemsContainer.innerHTML = `<p style="text-align: center; color: #888; margin-top: 30px;">Your cart is empty.</p>`;
+                totalSpan.innerText = `₹0`;
                 return;
             }
 
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
+            itemsContainer.innerHTML = '';
+            let grandTotal = 0;
 
             cart.forEach((item, index) => {
-                total += item.price;
-                const itemElement = document.createElement('div');
-                itemElement.classList.add('cart-item');
-                itemElement
+                grandTotal += item.price * item.qty;
+                let div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <p>₹${item.price} x ${item.qty}</p>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-item" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i></button>
+                `;
+                itemsContainer.appendChild(div);
+            });
+
+            totalSpan.innerText = `₹${grandTotal}`;
+        }
+    </script>
+</body>
+</html>
