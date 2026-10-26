@@ -24,7 +24,7 @@
             color: #222;
         }
 
-        /* Announcement Bar */
+        /* Top Announcement Bar */
         .top-bar {
             background-color: #000;
             color: #fff;
@@ -359,6 +359,20 @@
         .modal-title { font-size: 22px; font-weight: 800; color: #111; margin-bottom: 10px; }
         .modal-prices { margin-bottom: 15px; font-size: 18px; }
         .modal-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 20px; }
+        
+        .modal-btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        .modal-btn-group button {
+            flex: 1;
+            padding: 11px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+        }
 
         /* Cart Drawer */
         .cart-overlay {
@@ -524,6 +538,102 @@
         }
 
         .btn-flex-group button { flex: 1; }
+
+        /* Checkout Page View Styling (Matches Instagram Post) */
+        .checkout-page-container {
+            display: none;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .checkout-page-container.active { display: block; }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 0.9fr;
+            gap: 30px;
+        }
+
+        .checkout-form-box, .checkout-summary-box {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .checkout-form-box h3, .checkout-summary-box h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #111;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+        }
+        .form-group input:focus { border-color: #58259c; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .payment-option-box {
+            border: 1px solid #cbd5e1;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkout-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+        }
+
+        .place-order-btn {
+            background-color: #1e293b;
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .place-order-btn:hover { background-color: #58259c; }
     </style>
 </head>
 <body>
@@ -535,10 +645,10 @@
 
     <!-- Header -->
     <header>
-        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="logo">PRO<span>-FORM</span></a>
+        <a href="#" onclick="showShopView(); return false;" class="logo">PRO<span>-FORM</span></a>
         <ul class="nav-links">
-            <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">HOME</a></li>
-            <li><a href="#featured">PRODUCTS</a></li>
+            <li><a href="#" onclick="showShopView(); return false;">HOME</a></li>
+            <li><a href="#featured" onclick="showShopView()">PRODUCTS</a></li>
             <li><a href="#" onclick="alert('PRO-FORM is your ultimate destination for high-performance fitness supplements & gear.'); return false;">ABOUT US</a></li>
             <li><a href="#" onclick="alert('Contact us at support@proformfitness.demo'); return false;">CONTACT US</a></li>
         </ul>
@@ -547,28 +657,117 @@
         </button>
     </header>
 
-    <!-- Hero Banner -->
-    <div class="hero">
-        <h1>Welcome to PRO-FORM</h1>
-        <p>Fuel your passion with high-performance fitness supplements and apparel.</p>
-        <a href="#featured" class="shop-btn">Shop Now</a>
-    </div>
-
-    <!-- Container -->
-    <div class="container">
-        
-        <!-- Category Boxes -->
-        <h2 class="section-title">Product Categories</h2>
-        <div class="categories-grid">
-            <a href="#featured" class="category-box">Whey Protein</a>
-            <a href="#featured" class="category-box">Mass Gainer</a>
-            <a href="#featured" class="category-box">Creatine</a>
-            <a href="#featured" class="category-box">Pre-Workout</a>
+    <!-- Main Shop View Container -->
+    <div id="shop-view-container">
+        <!-- Hero Banner -->
+        <div class="hero">
+            <h1>Welcome to PRO-FORM</h1>
+            <p>Fuel your passion with high-performance fitness supplements and apparel.</p>
+            <a href="#featured" class="shop-btn">Shop Now</a>
         </div>
 
-        <!-- Featured Products Grid -->
-        <h2 class="section-title" id="featured">Featured Products</h2>
-        <div class="product-grid" id="product-grid-container"></div>
+        <!-- Container -->
+        <div class="container">
+            <!-- Category Boxes -->
+            <h2 class="section-title">Product Categories</h2>
+            <div class="categories-grid">
+                <a href="#featured" class="category-box">Whey Protein</a>
+                <a href="#featured" class="category-box">Mass Gainer</a>
+                <a href="#featured" class="category-box">Creatine</a>
+                <a href="#featured" class="category-box">Pre-Workout</a>
+            </div>
+
+            <!-- Featured Products Grid -->
+            <h2 class="section-title" id="featured">Featured Products</h2>
+            <div class="product-grid" id="product-grid-container"></div>
+        </div>
+    </div>
+
+    <!-- Dedicated WooCommerce Checkout Page View -->
+    <div class="checkout-page-container" id="checkout-page-view">
+        <h2 style="font-family:'Montserrat', sans-serif; font-weight:800; margin-bottom:25px; font-size:28px;">Checkout</h2>
+        <div class="checkout-grid">
+            <!-- Left: Form -->
+            <div class="checkout-form-box">
+                <h3>Contact Information</h3>
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input type="email" placeholder="you@example.com" value="customer@proform.demo">
+                </div>
+
+                <h3 style="margin-top: 25px;">Billing address</h3>
+                <div class="form-group">
+                    <label>Country / Region</label>
+                    <select>
+                        <option>India</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First name</label>
+                        <input type="text" placeholder="First name" value="Aarush">
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input type="text" placeholder="Last name" value="Bhola">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" placeholder="House number and street name" value="123 Fitness Street">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" placeholder="Town / City" value="New Delhi">
+                    </div>
+                    <div class="form-group">
+                        <label>State</label>
+                        <select>
+                            <option>Delhi</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PIN Code</label>
+                        <input type="text" placeholder="PIN code" value="110001">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone (optional)</label>
+                        <input type="text" placeholder="Phone number" value="9876543210">
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 25px;">Payment options</h3>
+                <label class="payment-option-box">
+                    <input type="radio" name="payment" checked> Direct bank transfer
+                </label>
+                <label class="payment-option-box">
+                    <input type="radio" name="payment"> Cash on delivery
+                </label>
+
+                <button class="place-order-btn" onclick="completeOrder()">Place Order</button>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="checkout-summary-box">
+                <h3>Order summary</h3>
+                <div id="checkout-items-list">
+                    <!-- Dynamic Cart Items -->
+                </div>
+                <div style="border-top: 1px solid #e2e8f0; margin-top: 15px; padding-top: 15px;">
+                    <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px; color:#166534; font-weight:600;">
+                        <span>Total Savings:</span>
+                        <span id="checkout-page-savings">₹0.00</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:800; color:#111;">
+                        <span>Total:</span>
+                        <span id="checkout-page-total">₹0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Floating Cart Button -->
@@ -577,7 +776,7 @@
         <i class="fa-solid fa-bag-shopping" style="font-size: 18px;"></i>
     </div>
 
-    <!-- Product Details Modal (Popup) -->
+    <!-- Product Details Modal (Popup with Add to Cart & Buy Now) -->
     <div class="product-modal-overlay" id="product-modal-overlay" onclick="closeProductModal(event)">
         <div class="product-modal" onclick="event.stopPropagation()">
             <button class="modal-close-btn" onclick="closeProductModal()">&times;</button>
@@ -591,12 +790,15 @@
                     <span class="new-price" id="modal-new-price"></span>
                 </div>
                 <p class="modal-desc" id="modal-product-desc"></p>
-                <button class="add-cart-btn" style="background-color:#58259c; color:#fff; padding:12px; font-size:14px;" id="modal-add-btn">Add to Cart</button>
+                <div class="modal-btn-group">
+                    <button class="add-cart-btn" style="background:#58259c; color:#fff;" id="modal-add-btn">Add to Cart</button>
+                    <button class="add-cart-btn" style="background:#00d2d3; color:#fff;" id="modal-buynow-btn">Buy Now</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Cart Overlay & Drawer -->
+    <!-- Cart Drawer -->
     <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
     <div class="cart-drawer" id="cart-drawer">
         <div class="cart-alert">
@@ -622,7 +824,7 @@
                     <button class="btn-dark" onclick="closeCart()">View Cart</button>
                     <button class="btn-dark" onclick="closeCart()">Continue Shopping</button>
                 </div>
-                <button class="btn-dark" style="background-color: #1e293b;" onclick="alert('Demo Order Placed Successfully!')">
+                <button class="btn-dark" style="background-color: #58259c;" onclick="goToCheckout()">
                     Checkout – <span id="checkout-total">₹0.00</span>
                 </button>
             </div>
@@ -630,7 +832,6 @@
     </div>
 
     <script>
-        // Bulletproof Unsplash High-Performance Image URLs for 100% Loading Success
         const productsData = [
             {
                 id: 1,
@@ -705,10 +906,19 @@
             document.getElementById('modal-new-price').innerText = `₹${p.price}.00`;
             document.getElementById('modal-product-desc').innerText = p.desc;
             
-            const addBtn = document.getElementById('modal-add-btn');
-            addBtn.onclick = function() {
+            document.getElementById('modal-add-btn').onclick = function() {
                 addToCart(p.name, p.price, p.oldPrice, p.img);
                 closeProductModal();
+            };
+
+            document.getElementById('modal-buynow-btn').onclick = function() {
+                // Add to cart and jump straight to checkout page
+                let item = cart.find(i => i.name === p.name);
+                if (item) { item.qty++; } else { cart.push({ name: p.name, price: p.price, oldPrice: p.oldPrice, img: p.img, qty: 1 }); }
+                saveCart();
+                renderCart();
+                closeProductModal();
+                goToCheckout();
             };
 
             document.getElementById('product-modal-overlay').classList.add('active');
@@ -749,12 +959,14 @@
             }
             saveCart();
             renderCart();
+            renderCheckoutPage();
         }
 
         function removeItem(index) {
             cart.splice(index, 1);
             saveCart();
             renderCart();
+            renderCheckoutPage();
         }
 
         function renderCart() {
@@ -804,6 +1016,62 @@
             savingsEl.innerText = `₹${totalSavings.toLocaleString()}.00`;
             subtotalEl.innerText = `₹${subtotal.toLocaleString()}.00`;
             checkoutEl.innerText = `₹${subtotal.toLocaleString()}.00`;
+        }
+
+        // Navigation & Checkout Page Views
+        function showShopView() {
+            document.getElementById('shop-view-container').style.display = 'block';
+            document.getElementById('checkout-page-view').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items before checking out.');
+                return;
+            }
+            closeCart();
+            document.getElementById('shop-view-container').style.display = 'none';
+            document.getElementById('checkout-page-view').classList.add('active');
+            renderCheckoutPage();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderCheckoutPage() {
+            const listEl = document.getElementById('checkout-items-list');
+            listEl.innerHTML = '';
+            let subtotal = 0;
+            let totalSavings = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.qty;
+                totalSavings += (item.oldPrice - item.price) * item.qty;
+
+                let row = document.createElement('div');
+                row.className = 'checkout-item-row';
+                row.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <img src="${item.img}" style="width:40px; height:40px; object-fit:contain; background:#f9f9f9; border-radius:4px;">
+                        <div>
+                            <div style="font-weight:700;">${item.name} <span style="font-weight:400; color:#666;">x ${item.qty}</span></div>
+                            <div style="font-size:11px; color:#166534;">Save ₹${(item.oldPrice - item.price) * item.qty}</div>
+                        </div>
+                    </div>
+                    <div style="font-weight:700;">₹${(item.price * item.qty).toLocaleString()}.00</div>
+                `;
+                listEl.appendChild(row);
+            });
+
+            document.getElementById('checkout-page-savings').innerText = `₹${totalSavings.toLocaleString()}.00`;
+            document.getElementById('checkout-page-total').innerText = `₹${subtotal.toLocaleString()}.00`;
+        }
+
+        function completeOrder() {
+            alert('🎉 Demo Order Placed Successfully! Thank you for shopping with PRO-FORM.');
+            cart = [];
+            saveCart();
+            renderCart();
+            showShopView();
         }
 
         renderProducts();
