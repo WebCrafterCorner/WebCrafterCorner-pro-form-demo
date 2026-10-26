@@ -54,6 +54,8 @@
             font-weight: 800;
             letter-spacing: -0.5px;
             color: #000;
+            text-decoration: none;
+            cursor: pointer;
         }
         .logo span { color: #00bcd4; }
 
@@ -70,6 +72,7 @@
             font-weight: 700;
             letter-spacing: 0.5px;
             transition: color 0.2s;
+            cursor: pointer;
         }
 
         .nav-links a:hover { color: #58259c; }
@@ -465,12 +468,12 @@
 
     <!-- Header -->
     <header>
-        <div class="logo">PRO<span>-FORM</span></div>
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="logo">PRO<span>-FORM</span></a>
         <ul class="nav-links">
-            <li><a href="#">HOME</a></li>
+            <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">HOME</a></li>
             <li><a href="#featured">PRODUCTS</a></li>
-            <li><a href="#">ABOUT US</a></li>
-            <li><a href="#">CONTACT US</a></li>
+            <li><a href="#" onclick="alert('PRO-FORM is your ultimate destination for high-performance fitness supplements & gear.'); return false;">ABOUT US</a></li>
+            <li><a href="#" onclick="alert('Contact us at support@proformfitness.demo'); return false;">CONTACT US</a></li>
         </ul>
         <button class="cart-header-btn" onclick="openCart()">
             <i class="fa-solid fa-cart-shopping"></i> Cart
@@ -504,56 +507,56 @@
             <div class="product-card">
                 <span class="sale-badge">Sale!</span>
                 <div class="product-img-box">
-                    <img src="pre-workout.png" alt="Pre-Workout">
+                    <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=400" alt="Pre-Workout">
                 </div>
                 <div class="product-name">Pre – Workout</div>
                 <div class="price-line">
                     <span class="old-price">₹1,499.00</span>
                     <span class="new-price">₹999.00</span>
                 </div>
-                <button class="add-cart-btn" onclick="addToCart('Pre – Workout', 999, 1499, 'pre-workout.png')">Add to cart</button>
+                <button class="add-cart-btn" onclick="addToCart('Pre – Workout', 999, 1499, 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=400')">Add to cart</button>
             </div>
 
             <!-- Whey Protein -->
             <div class="product-card">
                 <span class="sale-badge">Sale!</span>
                 <div class="product-img-box">
-                    <img src="whey-protein.png" alt="Whey Protein">
+                    <img src="https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400" alt="Whey Protein">
                 </div>
                 <div class="product-name">Whey Protein</div>
                 <div class="price-line">
                     <span class="old-price">₹1,999.00</span>
                     <span class="new-price">₹999.00</span>
                 </div>
-                <button class="add-cart-btn" onclick="addToCart('Whey Protein', 999, 1999, 'whey-protein.png')">Add to cart</button>
+                <button class="add-cart-btn" onclick="addToCart('Whey Protein', 999, 1999, 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400')">Add to cart</button>
             </div>
 
             <!-- Mass Gainer -->
             <div class="product-card">
                 <span class="sale-badge">Sale!</span>
                 <div class="product-img-box">
-                    <img src="mass-gainer.png" alt="Mass Gainer">
+                    <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=400" alt="Mass Gainer">
                 </div>
                 <div class="product-name">Mass Gainer</div>
                 <div class="price-line">
                     <span class="old-price">₹2,299.00</span>
                     <span class="new-price">₹1,199.00</span>
                 </div>
-                <button class="add-cart-btn" onclick="addToCart('Mass Gainer', 1199, 2299, 'mass-gainer.png')">Add to cart</button>
+                <button class="add-cart-btn" onclick="addToCart('Mass Gainer', 1199, 2299, 'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=400')">Add to cart</button>
             </div>
 
             <!-- Creatine -->
             <div class="product-card">
                 <span class="sale-badge">Sale!</span>
                 <div class="product-img-box">
-                    <img src="creatine.png" alt="Creatine">
+                    <img src="https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=400" alt="Creatine">
                 </div>
                 <div class="product-name">Creatine</div>
                 <div class="price-line">
                     <span class="old-price">₹299.00</span>
                     <span class="new-price">₹139.00</span>
                 </div>
-                <button class="add-cart-btn" onclick="addToCart('Creatine', 139, 299, 'creatine.png')">Add to cart</button>
+                <button class="add-cart-btn" onclick="addToCart('Creatine', 139, 299, 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=400')">Add to cart</button>
             </div>
 
         </div>
@@ -608,10 +611,10 @@
 
     <script>
         let cart = [
-            { name: 'Pre – Workout', price: 999, oldPrice: 1499, img: 'pre-workout.png', qty: 1 },
-            { name: 'Whey Protein', price: 999, oldPrice: 1999, img: 'whey-protein.png', qty: 1 },
-            { name: 'Mass Gainer', price: 1199, oldPrice: 2299, img: 'mass-gainer.png', qty: 1 },
-            { name: 'Creatine', price: 139, oldPrice: 299, img: 'creatine.png', qty: 1 }
+            { name: 'Pre – Workout', price: 999, oldPrice: 1499, img: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=400', qty: 1 },
+            { name: 'Whey Protein', price: 999, oldPrice: 1999, img: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400', qty: 1 },
+            { name: 'Mass Gainer', price: 1199, oldPrice: 2299, img: 'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=400', qty: 1 },
+            { name: 'Creatine', price: 139, oldPrice: 299, img: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=400', qty: 1 }
         ];
 
         function openCart() {
