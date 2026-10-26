@@ -879,3 +879,141 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const productsData = [
+            {
+                id: 1,
+                name: "Pre – Workout",
+                price: 999,
+                oldPrice: 1499,
+                img: "p1.png",
+                desc: "Explosive Energy & Endurance formula designed for intense workout sessions. Packed with Citrulline, Beta-Alanine, and Caffeine for maximum pumps."
+            },
+            {
+                id: 2,
+                name: "Whey Protein",
+                price: 999,
+                oldPrice: 1999,
+                img: "p3.png",
+                desc: "100% Pure Whey Protein Isolate providing 25g of protein per serving. Ultra-fast absorption for quick muscle recovery after heavy training."
+            },
+            {
+                id: 3,
+                name: "Mass Gainer",
+                price: 1199,
+                oldPrice: 2299,
+                img: "p2.png",
+                desc: "High-calorie formula with complex carbs and premium protein blend for fast mass building and clean weight gain."
+            },
+            {
+                id: 4,
+                name: "Creatine",
+                price: 139,
+                oldPrice: 299,
+                img: "p4.png",
+                desc: "100% Micronized Creatine Monohydrate for boosted strength, explosive power, and muscle volume during workouts."
+            }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('proform_cart')) || [];
+        let appliedCouponDiscount = 0;
+
+        function saveCart() {
+            localStorage.setItem('proform_cart', JSON.stringify(cart));
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('product-grid-container');
+            if(!container) return;
+            container.innerHTML = '';
+
+            productsData.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <span class="sale-badge">Sale!</span>
+                    <div class="product-img-box" onclick="openProductModal(${p.id})">
+                        <img src="${p.img}" alt="${p.name}">
+                    </div>
+                    <div class="product-name" onclick="openProductModal(${p.id})">${p.name}</div>
+                    <div class="price-line">
+                        <span class="old-price">₹${p.oldPrice}.00</span>
+                        <span class="new-price">₹${p.price}.00</span>
+                    </div>
+                    <button class="add-cart-btn" onclick="addToCart('${p.name}', ${p.price}, ${p.oldPrice}, '${p.img}')">Add to cart</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openProductModal(productId) {
+            const p = productsData.find(item => item.id === productId);
+            if (!p) return;
+
+            document.getElementById('modal-product-img').src = p.img;
+            document.getElementById('modal-product-title').innerText = p.name;
+            document.getElementById('modal-old-price').innerText = `₹${p.oldPrice}.00`;
+            document.getElementById('modal-new-price').innerText = `₹${p.price}.00`;
+            document.getElementById('modal-product-desc').innerText = p.desc;
+            
+            document.getElementById('modal-add-btn').onclick = function() {
+                addToCart(p.name, p.price, p.oldPrice, p.img);
+                closeProductModal();
+            };
+
+            document.getElementById('modal-buynow-btn').onclick = function() {
+                let item = cart.find(i => i.name === p.name);
+                if (item) { item.qty++; } else { cart.push({ name: p.name, price: p.price, oldPrice: p.oldPrice, img: p.img, qty: 1 }); }
+                saveCart();
+                renderCart();
+                closeProductModal();
+                goToCheckout();
+            };
+
+            document.getElementById('product-modal-overlay').classList.add('active');
+        }
+
+        function closeProductModal(e) {
+            if (!e || e.target.id === 'product-modal-overlay' || e.target.className === 'modal-close-btn') {
+                document.getElementById('product-modal-overlay').classList.remove('active');
+            }
+        }
+
+        function openCart() {
+            document.getElementById('cart-drawer').classList.add('open');
+            document.getElementById('cart-overlay').classList.add('active');
+        }
+
+        function closeCart() {
+            document.getElementById('cart-drawer').classList.remove('open');
+            document.getElementById('cart-overlay').classList.remove('active');
+        }
+
+        function addToCart(name, price, oldPrice, img) {
+            let item = cart.find(i => i.name === name);
+            if (item) {
+                item.qty++;
+            } else {
+                cart.push({ name, price, oldPrice, img, qty: 1 });
+            }
+            saveCart();
+            renderCart();
+            openCart();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart();
+            renderCart();
+            renderCheckoutPage();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+            renderCheckout
