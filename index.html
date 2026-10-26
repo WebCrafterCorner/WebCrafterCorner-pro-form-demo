@@ -1016,4 +1016,147 @@
             cart.splice(index, 1);
             saveCart();
             renderCart();
-            renderCheckout
+            renderCheckoutPage();
+        }
+
+        function renderCart() {
+            let list = document.getElementById('cart-list');
+            let floatCount = document.getElementById('float-cart-count');
+            let savingsEl = document.getElementById('savings-amount');
+            let subtotalEl = document.getElementById('subtotal-amount');
+            let checkoutEl = document.getElementById('checkout-total');
+
+            if(!list) return;
+            list.innerHTML = '';
+            let totalQty = 0;
+            let subtotal = 0;
+            let totalSavings = 0;
+
+            if (cart.length === 0) {
+                list.innerHTML = `<p style="text-align: center; color: #888; margin-top: 40px; font-size: 14px;">Your cart is empty.</p>`;
+            } else {
+                cart.forEach((item, index) => {
+                    totalQty += item.qty;
+                    subtotal += item.price * item.qty;
+                    totalSavings += (item.oldPrice - item.price) * item.qty;
+
+                    let row = document.createElement('div');
+                    row.className = 'cart-item-row';
+                    row.innerHTML = `
+                        <img src="${item.img}" class="cart-item-img" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <div class="cart-item-price">Price: <span style="text-decoration:line-through;">₹${item.oldPrice}.00</span> <strong style="color:#000;">₹${item.price}.00</strong></div>
+                            <span class="save-tag">SAVE ₹${(item.oldPrice - item.price) * item.qty}.00</span>
+                            <div>
+                                <div class="qty-box">
+                                    <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                                    <span class="qty-val">${item.qty}</span>
+                                    <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-item-total">₹${(item.price * item.qty).toLocaleString()}.00</div>
+                        <i class="fa-solid fa-trash remove-icon" onclick="removeItem(${index})"></i>
+                    `;
+                    list.appendChild(row);
+                });
+            }
+
+            floatCount.innerText = totalQty;
+            savingsEl.innerText = `₹${totalSavings.toLocaleString()}.00`;
+            subtotalEl.innerText = `₹${subtotal.toLocaleString()}.00`;
+            checkoutEl.innerText = `₹${subtotal.toLocaleString()}.00`;
+        }
+
+        function showShopView() {
+            document.getElementById('shop-view-container').style.display = 'block';
+            document.getElementById('checkout-page-view').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items before checking out.');
+                return;
+            }
+            closeCart();
+            document.getElementById('shop-view-container').style.display = 'none';
+            document.getElementById('checkout-page-view').classList.add('active');
+            renderCheckoutPage();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderCheckoutPage() {
+            const listEl = document.getElementById('checkout-items-list');
+            if(!listEl) return;
+            listEl.innerHTML = '';
+            let subtotal = 0;
+            let totalSavings = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.qty;
+                totalSavings += (item.oldPrice - item.price) * item.qty;
+
+                let row = document.createElement('div');
+                row.className = 'checkout-item-row';
+                row.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <img src="${item.img}" style="width:40px; height:40px; object-fit:contain; background:#f9f9f9; border-radius:4px;">
+                        <div>
+                            <div style="font-weight:700;">${item.name} <span style="font-weight:400; color:#666;">x ${item.qty}</span></div>
+                            <div style="font-size:11px; color:#166534;">Save ₹${(item.oldPrice - item.price) * item.qty}</div>
+                        </div>
+                    </div>
+                    <div style="font-weight:700;">₹${(item.price * item.qty).toLocaleString()}.00</div>
+                `;
+                listEl.appendChild(row);
+            });
+
+            document.getElementById('checkout-page-subtotal').innerText = `₹${subtotal.toLocaleString()}.00`;
+            document.getElementById('checkout-page-savings').innerText = `₹${totalSavings.toLocaleString()}.00`;
+
+            let finalTotal = subtotal - appliedCouponDiscount;
+            if (finalTotal < 0) finalTotal = 0;
+
+            document.getElementById('checkout-page-total').innerText = `₹${finalTotal.toLocaleString()}.00`;
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+            const msgEl = document.getElementById('coupon-msg');
+            const discountRow = document.getElementById('coupon-discount-row');
+            
+            let subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            if (code === 'PROFORM10') {
+                appliedCouponDiscount = Math.round(subtotal * 0.10);
+                msgEl.style.color = '#166534';
+                msgEl.innerText = '✓ Coupon PROFORM10 applied (10% OFF)';
+                discountRow.style.display = 'flex';
+                document.getElementById('checkout-page-coupon-discount').innerText = `-₹${appliedCouponDiscount.toLocaleString()}.00`;
+            } else if (code === '') {
+                msgEl.style.color = '#ef4444';
+                msgEl.innerText = 'Please enter a coupon code.';
+            } else {
+                msgEl.style.color = '#ef4444';
+                msgEl.innerText = 'Invalid coupon code. Try PROFORM10';
+            }
+
+            renderCheckoutPage();
+        }
+
+        function completeOrder() {
+            alert('🎉 Demo Order Placed Successfully! Thank you for shopping with PRO-FORM.');
+            cart = [];
+            appliedCouponDiscount = 0;
+            saveCart();
+            renderCart();
+            showShopView();
+        }
+
+        renderProducts();
+        renderCart();
+    </script>
+</body>
+</html>
